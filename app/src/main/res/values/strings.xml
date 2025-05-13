@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">apkCavoshCafe</string>
+    <string name="app_name">Cavosh Cafe</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -11,4 +11,11 @@
     <string name="perfil">Perfil</string>
     <string name="pedidos">Pedidos</string>
     <string name="content_description">contentDescription</string>
+    <string name="iniciar">Iniciar</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="sign_in">Sign in</string>
+    <string name="correo">Correo</string>
+    <string name="passwordd">Contraseña</string>
+    <string name="olvidar_passwordd">Olvidar Contraseña</string>
 </resources>

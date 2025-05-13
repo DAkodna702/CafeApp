@@ -8,12 +8,13 @@
     tools:context=".ui.Splash">
 
     <Button
+        android:id="@+id/btnIniciar"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
         android:layout_marginBottom="100dp"
+        android:layout_gravity="bottom|center"
         android:background="@drawable/sh_bg_blumine"
-        android:text="Iniciar"
+        android:text="@string/iniciar"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="22sp"

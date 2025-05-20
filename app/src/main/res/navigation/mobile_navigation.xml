@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_navigation_login_to_navigation_inicio"
             app:destination="@id/navigation_inicio" />
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_olvidar_passwordd"
+            app:destination="@id/navigation_olvidar_passwordd" />
     </fragment>
     <fragment
         android:id="@+id/navigation_registrar"
@@ -75,10 +78,24 @@
         android:id="@+id/navigation_perfil"
         android:name="es.oaemdl.apkcavoshcafe.ui.Perfil"
         android:label="fragment_perfil"
-        tools:layout="@layout/fragment_perfil" />
+        tools:layout="@layout/fragment_perfil" >
+        <action
+            android:id="@+id/action_navigation_perfil_to_navigation_cambiar_passwordd"
+            app:destination="@id/navigation_cambiar_passwordd" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_pedidos"
         android:name="es.oaemdl.apkcavoshcafe.ui.Pedidos"
         android:label="fragment_pedidos"
         tools:layout="@layout/fragment_pedidos" />
+    <fragment
+        android:id="@+id/navigation_olvidar_passwordd"
+        android:name="es.oaemdl.apkcavoshcafe.ui.OlvidarPasswordd"
+        android:label="fragment_olvidar_passwordd"
+        tools:layout="@layout/fragment_olvidar_passwordd" />
+    <fragment
+        android:id="@+id/navigation_cambiar_passwordd"
+        android:name="es.oaemdl.apkcavoshcafe.ui.CambiarPasswordd"
+        android:label="fragment_cambiar_passwordd"
+        tools:layout="@layout/fragment_cambiar_passwordd" />
 </navigation>

@@ -18,10 +18,10 @@ import android.view.ViewGroup;
 import com.google.android.material.snackbar.Snackbar;
 
 import es.oaemdl.apkcavoshcafe.R;
-import es.oaemdl.apkcavoshcafe.databinding.FragmentLoginBinding;
+import es.oaemdl.apkcavoshcafe.databinding.FragmentOlvidarPassworddBinding;
 
-public class Login extends Fragment {
-    FragmentLoginBinding binding;
+public class OlvidarPasswordd extends Fragment {
+    FragmentOlvidarPassworddBinding binding;
     View view;
     Context context;
     NavController navController;
@@ -34,7 +34,7 @@ public class Login extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentLoginBinding.inflate( inflater, container, false );
+        binding = FragmentOlvidarPassworddBinding.inflate( inflater, container, false );
         return view = binding.getRoot();
     }
 
@@ -44,10 +44,20 @@ public class Login extends Fragment {
         context = getContext();
         navController = Navigation.findNavController( view );
 
-        binding.tvRegister.setOnClickListener( v -> navController.navigate( R.id.navigation_registrar ) );
-        binding.tvRegistrate.setOnClickListener( v -> navController.navigate( R.id.navigation_registrar ) );
-        binding.tvOlvidarPasswordd.setOnClickListener(v -> navController.navigate( R.id.navigation_olvidar_passwordd ) );
-        binding.btnLogin.setOnClickListener( v -> btnLogin_Click() );
+        binding.tvSignIn.setOnClickListener( v -> navController.navigate( R.id.navigation_login ) );
+        binding.tvIniciaSesion.setOnClickListener( v -> navController.navigate( R.id.navigation_login ) );
+        binding.btnRegistrar.setOnClickListener( v -> btnRegistrar_Click() );
+
+        binding.edtNombres.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.tilNombres.setError( null );
+            }
+
+            @Override public void afterTextChanged(Editable s) { }
+        });
 
         binding.edtCorreo.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -71,18 +81,39 @@ public class Login extends Fragment {
             @Override public void afterTextChanged(Editable s) { }
         });
 
+        binding.edtConfirmarPasswordd.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.tilConfirmarPasswordd.setError( null );
+            }
+
+            @Override public void afterTextChanged(Editable s) { }
+        });
+
     }
 
-    private void btnLogin_Click() {
+    private void btnRegistrar_Click() {
+        String sNombres = binding.edtNombres.getText().toString();
         String sCorreo = binding.edtCorreo.getText().toString();
         String sPasswordd = binding.edtPasswordd.getText().toString();
-        String sMensaje = "";
+        String sConfirmarPasswordd = binding.edtConfirmarPasswordd.getText().toString();
 
+        if ( sNombres.isEmpty() ) binding.tilNombres.setError("Ingrese nombres");
         if ( sCorreo.isEmpty() ) binding.tilCorreo.setError("Ingrese correo");
         if ( sPasswordd.isEmpty() ) binding.tilPasswordd.setError("Ingrese contraseña");
+        if ( sConfirmarPasswordd.isEmpty() ) binding.tilConfirmarPasswordd.setError("Ingrese contraseña");
+        if ( !sPasswordd.isEmpty() && !sConfirmarPasswordd.isEmpty() &&
+                !sPasswordd.equals( sConfirmarPasswordd ) ) {
+            binding.tilPasswordd.setError("Las contraseñas deben ser iguales");
+            binding.tilConfirmarPasswordd.setError("Las contraseñas deben ser iguales");
+        }
 
-        if ( binding.tilCorreo.getError() != null ||
-             binding.tilPasswordd.getError() != null  ) return;
+        if ( binding.tilNombres.getError() != null ||
+                binding.tilCorreo.getError() != null ||
+                binding.tilPasswordd.getError() != null ||
+                binding.tilConfirmarPasswordd.getError() != null ) return;
 
         //Snackbar.make( view, "Usuario y/o contraseña inválido", Snackbar.LENGTH_LONG ).show();
     }

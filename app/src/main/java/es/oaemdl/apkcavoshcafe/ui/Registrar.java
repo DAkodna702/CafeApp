@@ -17,8 +17,11 @@ import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import es.oaemdl.apkcavoshcafe.MainActivity;
 import es.oaemdl.apkcavoshcafe.R;
+import es.oaemdl.apkcavoshcafe.controllers.UsuarioDAO;
 import es.oaemdl.apkcavoshcafe.databinding.FragmentRegistrarBinding;
+import es.oaemdl.apkcavoshcafe.models.Usuario;
 
 public class Registrar extends Fragment {
     FragmentRegistrarBinding binding;
@@ -115,7 +118,24 @@ public class Registrar extends Fragment {
              binding.tilPasswordd.getError() != null ||
              binding.tilConfirmarPasswordd.getError() != null ) return;
 
-        //Snackbar.make( view, "Usuario y/o contraseña inválido", Snackbar.LENGTH_LONG ).show();
+
+        Usuario usuario = new Usuario();
+        UsuarioDAO usuarioDAO = new UsuarioDAO( context);
+
+        usuario.setNombres( sNombres );
+        usuario.setCorreo( sCorreo );
+        usuario.setPasswordd( sPasswordd );
+
+        if(usuarioDAO.Guardar(usuario)){
+            MainActivity.usuario = usuario;
+            Snackbar.make( view, "Usuario creado", Snackbar.LENGTH_LONG ).show();
+            navController.navigate(R.id.navigation_inicio);
+            return;
+        }else{
+            Snackbar.make( view, "Usuario inválido y/o contraseña incorrectos", Snackbar.LENGTH_LONG ).show();
+        }
+
+
     }
 
 }

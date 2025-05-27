@@ -17,8 +17,11 @@ import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import es.oaemdl.apkcavoshcafe.MainActivity;
 import es.oaemdl.apkcavoshcafe.R;
+import es.oaemdl.apkcavoshcafe.controllers.UsuarioDAO;
 import es.oaemdl.apkcavoshcafe.databinding.FragmentLoginBinding;
+import es.oaemdl.apkcavoshcafe.models.Usuario;
 
 public class Login extends Fragment {
     FragmentLoginBinding binding;
@@ -84,7 +87,20 @@ public class Login extends Fragment {
         if ( binding.tilCorreo.getError() != null ||
              binding.tilPasswordd.getError() != null  ) return;
 
-        //Snackbar.make( view, "Usuario y/o contraseña inválido", Snackbar.LENGTH_LONG ).show();
+        Usuario usuario = new Usuario();
+        UsuarioDAO usuarioDAO = new UsuarioDAO( context);
+
+        usuario.setCorreo( sCorreo );
+        usuario.setPasswordd( sPasswordd );
+
+        if(usuarioDAO.Login(usuario)){
+            MainActivity.usuario = usuario;
+            navController.navigate(R.id.navigation_inicio);
+        }else{
+            Snackbar.make( view, "Usuario y/o contraseña inválido", Snackbar.LENGTH_LONG ).show();
+        }
+
+
     }
 
 }

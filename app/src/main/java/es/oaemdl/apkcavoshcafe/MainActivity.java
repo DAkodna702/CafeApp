@@ -12,8 +12,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import es.oaemdl.apkcavoshcafe.databinding.ActivityMainBinding;
+import es.oaemdl.apkcavoshcafe.models.Usuario;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static Usuario usuario = null;
 
     private ActivityMainBinding binding;
 
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         navController.addOnDestinationChangedListener( (navController1, navDestination, bundle) ->  {
+            navView.setVisibility( View.VISIBLE );
             int id = navDestination.getId();
             if ( id == R.id.navigation_splash ||
                  id == R.id.navigation_login ||

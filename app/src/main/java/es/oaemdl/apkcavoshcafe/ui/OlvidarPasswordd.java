@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
 import es.oaemdl.apkcavoshcafe.R;
 import es.oaemdl.apkcavoshcafe.databinding.FragmentOlvidarPassworddBinding;
 
@@ -45,19 +47,9 @@ public class OlvidarPasswordd extends Fragment {
         navController = Navigation.findNavController( view );
 
         binding.tvSignIn.setOnClickListener( v -> navController.navigate( R.id.navigation_login ) );
+        binding.tvRegister.setOnClickListener( v -> navController.navigate( R.id.navigation_registrar ) );
         binding.tvIniciaSesion.setOnClickListener( v -> navController.navigate( R.id.navigation_login ) );
-        binding.btnRegistrar.setOnClickListener( v -> btnRegistrar_Click() );
-
-        binding.edtNombres.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                binding.tilNombres.setError( null );
-            }
-
-            @Override public void afterTextChanged(Editable s) { }
-        });
+        binding.btnEnviar.setOnClickListener( v -> btnEnviar_Click() );
 
         binding.edtCorreo.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -70,50 +62,17 @@ public class OlvidarPasswordd extends Fragment {
             @Override public void afterTextChanged(Editable s) { }
         });
 
-        binding.edtPasswordd.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                binding.tilPasswordd.setError( null );
-            }
 
-            @Override public void afterTextChanged(Editable s) { }
-        });
-
-        binding.edtConfirmarPasswordd.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                binding.tilConfirmarPasswordd.setError( null );
-            }
-
-            @Override public void afterTextChanged(Editable s) { }
-        });
 
     }
 
-    private void btnRegistrar_Click() {
-        String sNombres = binding.edtNombres.getText().toString();
-        String sCorreo = binding.edtCorreo.getText().toString();
-        String sPasswordd = binding.edtPasswordd.getText().toString();
-        String sConfirmarPasswordd = binding.edtConfirmarPasswordd.getText().toString();
+    private void btnEnviar_Click() {
+        String sCorreo = Objects.requireNonNull(binding.edtCorreo.getText()).toString();
 
-        if ( sNombres.isEmpty() ) binding.tilNombres.setError("Ingrese nombres");
         if ( sCorreo.isEmpty() ) binding.tilCorreo.setError("Ingrese correo");
-        if ( sPasswordd.isEmpty() ) binding.tilPasswordd.setError("Ingrese contraseña");
-        if ( sConfirmarPasswordd.isEmpty() ) binding.tilConfirmarPasswordd.setError("Ingrese contraseña");
-        if ( !sPasswordd.isEmpty() && !sConfirmarPasswordd.isEmpty() &&
-                !sPasswordd.equals( sConfirmarPasswordd ) ) {
-            binding.tilPasswordd.setError("Las contraseñas deben ser iguales");
-            binding.tilConfirmarPasswordd.setError("Las contraseñas deben ser iguales");
-        }
 
-        if ( binding.tilNombres.getError() != null ||
-                binding.tilCorreo.getError() != null ||
-                binding.tilPasswordd.getError() != null ||
-                binding.tilConfirmarPasswordd.getError() != null ) return;
+        if ( binding.tilCorreo.getError() != null ) return;
 
         //Snackbar.make( view, "Usuario y/o contraseña inválido", Snackbar.LENGTH_LONG ).show();
     }

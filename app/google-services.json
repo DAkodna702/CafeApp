@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "855425233119",
+    "project_id": "apkcavoshcafe",
+    "storage_bucket": "apkcavoshcafe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855425233119:android:1a5a42692fd5e7b638f96a",
+        "android_client_info": {
+          "package_name": "es.oaemdl.apkcavoshcafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855425233119-qrg2sms6i5j8gkq3i0qss6e9633kqvat.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.oaemdl.apkcavoshcafe",
+            "certificate_hash": "07325b23e995a34f291365875ab3d760c5cd9bf5"
+          }
+        },
+        {
+          "client_id": "855425233119-0vhk9nk0l6ksp52bn8v4jvso1bi1j9hk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1fbzZtnX41aqmiRjcPZwYyZaaXllBhuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855425233119-0vhk9nk0l6ksp52bn8v4jvso1bi1j9hk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

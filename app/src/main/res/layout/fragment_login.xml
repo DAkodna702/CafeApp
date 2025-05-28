@@ -182,18 +182,21 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/btnLoginGoogle"
                 android:layout_width="115dp"
                 android:layout_height="85dp"
                 android:layout_marginStart="12dp"
-                android:background="@drawable/sh_bg_misty_rose">
+                android:background="@drawable/sh_bg_misty_rose"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/ivGoogle"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:contentDescription="@string/content_description"
                     android:src="@drawable/ic_google_plus"/>
 

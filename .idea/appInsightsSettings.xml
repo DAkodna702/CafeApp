@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="es.oaemdl.apkcavoshcafe" />
+                  <option name="mobileSdkAppId" value="1:855425233119:android:1a5a42692fd5e7b638f96a" />
+                  <option name="projectId" value="apkcavoshcafe" />
+                  <option name="projectNumber" value="855425233119" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

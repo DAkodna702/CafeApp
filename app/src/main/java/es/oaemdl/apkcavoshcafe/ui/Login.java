@@ -3,6 +3,7 @@ package es.oaemdl.apkcavoshcafe.ui;
 import static com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,16 +28,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 
 import es.oaemdl.apkcavoshcafe.MainActivity;
@@ -52,6 +61,9 @@ public class Login extends Fragment {
     private static final String TYPE_GOOGLE_ID_TOKEN_CREDENTIAL = GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL;
 
     private CredentialManager credentialManager;
+
+    private CallbackManager mCallbackManager;
+
     FragmentLoginBinding binding;
     View view;
     Context context;
@@ -77,11 +89,35 @@ public class Login extends Fragment {
         credentialManager = CredentialManager.create(getActivity().getBaseContext());
         mAuth = FirebaseAuth.getInstance();
 
+        FacebookSdk.sdkInitialize(context.getApplicationContext());
+        mCallbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "Inicio de sesión exitoso con Facebook: " + loginResult.getAccessToken().getToken());
+                firebaseAuthWithFacebook(loginResult.getAccessToken().getToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "Inicio de sesión de Facebook cancelado.");
+                Toast.makeText(context, "Inicio de sesión de Facebook cancelado.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.e(TAG, "Error en el inicio de sesión de Facebook: " + error.getMessage(), error);
+                Toast.makeText(context, "Error en Facebook Sign-In: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         binding.tvRegister.setOnClickListener( v -> navController.navigate( R.id.navigation_registrar ) );
         binding.tvRegistrate.setOnClickListener( v -> navController.navigate( R.id.navigation_registrar ) );
         binding.tvOlvidarPasswordd.setOnClickListener(v -> navController.navigate( R.id.navigation_olvidar_passwordd ) );
         binding.btnLogin.setOnClickListener( v -> btnLogin_Click() );
         binding.btnLoginGoogle.setOnClickListener( v -> btnLoginGoogle_Click() );
+        binding.btnLoginFacebook.setOnClickListener( v ->btnLoginFacebook_Click() );
 
         binding.edtCorreo.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -104,6 +140,41 @@ public class Login extends Fragment {
 
             @Override public void afterTextChanged(Editable s) { }
         });
+
+    }
+
+    private void btnLoginFacebook_Click() {
+        Log.d(TAG, "btnLoginFacebook_Click() llamado. Iniciando flujo de Facebook Sign-In.");
+
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
+    }
+
+    private void firebaseAuthWithFacebook(String accessToken) {
+        Log.d(TAG, "firebaseAuthWithFacebook:" + accessToken);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(accessToken);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "signInWithCredential (Facebook):success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+                    } else {
+                        Log.w(TAG, "signInWithCredential (Facebook):failure", task.getException());
+                        if (getActivity() != null) {
+                            requireActivity().runOnUiThread(() -> {
+                                Toast.makeText(context, "Fallo la autenticación de Firebase con Facebook.", Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                        updateUI(null);
+                    }
+                });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
 

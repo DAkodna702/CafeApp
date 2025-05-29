@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Cavosh Cafe</string>
+
+    <string name="facebook_app_id">1917431435684473</string>
+    <string name="fb_login_protocol_scheme">fb1917431435684473</string>
+    <string name="facebook_client_token">ef48c1446a9ac89f3f0ce8edeb053d19</string>
+
+
     <string name="default_web_client_id">855425233119-0vhk9nk0l6ksp52bn8v4jvso1bi1j9hk.apps.googleusercontent.com</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
